@@ -10,7 +10,7 @@
 
         <div class="carousel">
           <el-carousel :interval="4000" type="card" height="360px" style="width: 1300px">
-            <el-carousel-item v-for="item in this.swipperUrls" :key="item">
+            <el-carousel-item v-for="item in this.swipperUrls"  :key="item">
               <el-image
                       style="height: 360px;width: 100%"
                       :src="item"

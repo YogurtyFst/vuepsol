@@ -4,6 +4,7 @@ import Login from "../views/Login/Login";
 import Home from "../views/Home/Home";
 import Register from "../views/Register/Register";
 import Index from "../views/Home/Index";
+import Detail from "../views/Home/Detail";
 
 Vue.use(VueRouter)
 
@@ -36,7 +37,7 @@ const routes = [
       {
         path: 'detail/:id',
         name: 'detail',
-        component: Login
+        component: Detail
       }
     ]
   },
