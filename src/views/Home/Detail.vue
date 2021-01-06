@@ -1,6 +1,7 @@
 <template>
   <div style="margin: 0 auto">
     <el-input-number v-model="choice.num" @change="numChange" :min="1" :max="100" label="数量"></el-input-number>
+    <router-link to="/home">首页</router-link>
     <button @click="addCart()">加入购物车</button>
     <button @click="buy()">立即购买</button>
     <div class="hd">

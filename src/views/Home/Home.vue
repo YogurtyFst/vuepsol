@@ -4,13 +4,13 @@
             <el-header class="header">
                 <div class="hd">
                     <div>
-                        <router-link to="">我的订单</router-link>
+                        <router-link to="/myOrder">我的订单</router-link>
                     </div>
                     <div>
-                        <router-link to="">申请开店</router-link>
+                        <router-link to="/openStore">申请开店</router-link>
                     </div>
                     <div>
-                        <router-link to="">收货地址</router-link>
+                        <router-link to="/myAddress">收货地址</router-link>
                     </div>
                     <div>
                         <el-dropdown class="userInfo" @command="commandHandler">
