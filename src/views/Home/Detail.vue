@@ -1,62 +1,90 @@
 <template>
   <div style="margin: 0 auto">
-    <el-input-number v-model="choice.num" @change="numChange" :min="1" :max="100" label="数量"></el-input-number>
-    <router-link to="/home">首页</router-link>
-    <button @click="addCart()">加入购物车</button>
-    <button @click="buy()">立即购买</button>
-    <div class="hd">
-      <div class="carousel">
-        <el-carousel height="360px" style="width: 500px" trigger="click">
-          <el-carousel-item v-for="item in this.product.swipperImgs" :key="item">
-            <el-image
-                    style="height: 360px;width: 100%"
-                    :src="item"
-                    fit="fill"></el-image>
-          </el-carousel-item>
-        </el-carousel>
-      </div>
-      <div>
-        <span>商品名:   {{product.name}}</span>
-        <br>
-        <span>店铺名：    {{product.storeName}}</span>
-        <br>
-        <span>价格：   ￥{{price}}</span>
-        <br>
-        <span>销量：{{product.sales}}</span>
-        <br>
-        <span>发货地：{{product.address}}</span>
-        <br>
-        <span>运费：￥{{product.freight}}</span>
-        <br>
-        <span>商品描述:   {{product.description}}</span>
-        <br>
-        <br>
-        <br>
-        <br>
-      </div>
-    </div>
-    <h1>商品参数</h1>
-    <div v-for="item in product.args">
-      <div>{{item.name}}:{{item.value}}</div>
+    <div style="margin-top: 30px">
+      <router-link to="/home">返回首页</router-link>
     </div>
 
-    <h1>商品服务</h1>
-    <div v-for="item in product.services">
-      {{item.name}}
+    <div>
+      <div class="hd">
+        <div class="carousel">
+          <el-carousel height="500px" style="width: 400px" trigger="click" indicator-position="none">
+            <el-carousel-item v-for="item in this.product.swipperImgs" :key="item">
+              <el-image
+                      style="width: 100%"
+                      :src="item"
+                      fit="fill"></el-image>
+            </el-carousel-item>
+          </el-carousel>
+        </div>
+        <div class="rt">
+          <span style="font-size: 20px;">{{product.name}}</span>
+          <hr>
+          <div style="margin-top: 40px;font-size: 18px">价格：   <span style="font-size: 26px;color: red;margin-left: 40px;">￥{{price}}</span></div>
+          <div style="text-align: right;font-size: 14px;color: red">互助金: {{price * 0.05}}元</div>
+          <div style="display:flex;margin-top: 30px;justify-content: space-between">
+            <div style="display: flex">
+              <div><span style="font-size: 18px">发货</span><span style="margin-left: 30px"><i class="el-icon-location-outline"></i> <span>{{product.address}}</span></span></div>
+            </div>
+            <div style="text-align: right;">累计销售： <span style="color: grey;font-size: 14px;">{{product.sales}}</span></div>
+          </div>
+          <div style="margin-top: 30px">
+            <div style="font-size: 18px">保障</div>
+            <div style="margin-left: 50px;margin-top: 6px">
+              <span v-for="(item, index) in product.services">
+              <span>{{item.name}}</span>
+              <span v-if="index !== product.services.length-1" style="margin: auto 2px">·</span>
+            </span>
+            </div>
+          </div>
+
+          <div style="margin-top: 30px;font-size: 18px;margin-bottom: 20px"><span>商品选择:</span></div>
+          <div style="display: flex;flex-wrap: wrap; width: 450px;margin-left: 30px">
+            <div v-for="(item, index) in product.choices">
+              <div class="choice" :class="{active: index === selectIndex}" @click="select(item,index)">{{item.choice}}</div>
+            </div>
+          </div>
+
+          <div style="display: flex">
+            <div style="font-size: 18px; margin-top: 10px">数量</div>
+            <el-input-number v-model="choice.number"
+                             @change="numChange" :min="1" :max="storage" label="数量" size="mini"
+                             style="margin-top: 8px;margin-left: 12px"
+            ></el-input-number>
+            <div style="margin-top: 10px;margin-left: 8px"> (库存 {{storage}} 件)</div>
+          </div>
+
+          <div style="display: flex;margin-top: 15px;">
+            <el-button type="danger" plain style="margin-right: 10px" @click="addCart()">加入购物车</el-button>
+            <el-button type="danger" @click="buy()">立即购买</el-button>
+          </div>
+
+        </div>
+      </div>
     </div>
-    
-    <h1>商品body图片</h1>
-    <div v-for="item in product.bodyImgs">
+
+    <div>
+      <el-tabs type="border-card" style="height: 300px">
+        <el-tab-pane label="商品详情" class="pane">
+          <div style="margin: 20px">
+            <span>{{product.description}}</span>
+          </div>
+        </el-tab-pane>
+        <el-tab-pane label="商品参数" class="pane">
+          <div style="display: flex;flex-wrap: wrap;width: 920px;padding-left: 80px;padding-top: 40px">
+            <div v-for="item in product.args" style="width: 240px;margin-right: 30px">
+              <span>{{item.name}} :</span>
+              <span>{{item.value}}</span>
+            </div>
+
+          </div>
+        </el-tab-pane>
+      </el-tabs>
+    </div>
+
+    <div v-for="item in product.bodyImgs" style="text-align: center">
       <img :src="item" alt="">
     </div>
 
-    <h1>商品规格</h1>
-    <div v-for="(item, index) in product.choices" class="choice" :class="{active: index === selectIndex}">
-      <div @click="select(item,index)" class="choiceName">规格名: {{item.choice}}</div>
-      <div>库存: {{item.storage}}</div>
-      <h1>choice图片</h1>
-      <img :src="item.choiceImg" alt="">
-    </div>
   </div>
 </template>
 
@@ -70,8 +98,9 @@
         product: {},
         price: null,
         selectIndex: null,
+        storage: null,
         choice: {
-          num: 1,
+          number: 1,
           userId: null,
           choiceId: null
         }
@@ -96,6 +125,7 @@
 
         for (let i = 0; i < res.choices.length; i++) {
           res.choices[i].choiceImg = '/api' + res.choices[i].choiceImg
+          res.choices[i].price = Math.floor(res.choices[i].price).toFixed(2)
         }
 
         this.product = res
@@ -106,12 +136,12 @@
       select(item, index) {
         this.price = item.price
         this.selectIndex = index
+        this.storage = item.storage
         this.choice.choiceId = item.choiceId
-        console.log(item)
         this.choice.num = 1
       },
       numChange(value) {
-        this.choice.num = value
+        this.choice.number = value
       },
       addCart() {
         if (this.choice.choiceId == null) {
@@ -119,12 +149,12 @@
         }else {
           this.choice.userId = this.user.id
           this.postRequest('/api/cartItem/add',this.$qs.stringify(this.choice)).then(res => {
-            Message.info(res.msg)
+            // Message.info(res.msg)
           })
         }
       },
       buy() {
-        this.postRequest('/api/order/checkout1',this.$qs.stringify(this.choice))
+        // this.postRequest('/api/order/checkout1',this.$qs.stringify(this.choice))
         this.$router.replace('/checkout')
       }
     }
@@ -135,16 +165,26 @@
   .hd {
     display: flex;
     justify-content: flex-start;
-    width: 1200px;
-    margin-top: 40px;
+    width: 1000px;
+    margin-top: 20px;
+    border: 1px solid #eaeaea;
+    padding: 30px;
+  }
+  .rt {
+    margin-left: 90px;
   }
   .choice {
-    margin-top: 30px;
-  }
-  .choiceName{
+    border: 2px solid black;
+    padding: 2px 5px 2px 5px;
     cursor: pointer;
+    margin-right: 6px;
+    margin-bottom: 4px;
   }
   .active {
-    font-size: 24px;
+    border: 2px solid orangered;
   }
+  .pane {
+
+  }
+
 </style>
