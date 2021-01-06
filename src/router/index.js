@@ -8,6 +8,7 @@ import Detail from "../views/Home/Detail";
 import MyOrder from "../views/MyOrder/MyOrder";
 import MyAddress from "../views/MyAddress/MyAddress";
 import OpenStore from "../views/OpenStore/OpenStore";
+import CheckOut from "../views/CheckOut/CheckOut";
 
 Vue.use(VueRouter)
 
@@ -64,6 +65,11 @@ const routes = [
     path:'/openStore',
     name: 'OpenStore',
     component: OpenStore
+  },
+  {
+    path:'/checkout',
+    name: 'Checkout',
+    component: CheckOut
   }
   // {
   //   path: '/about',

@@ -124,7 +124,8 @@
         }
       },
       buy() {
-        this.postRequest('/api/order/imbuy')
+        this.postRequest('/api/order/checkout1',this.$qs.stringify(this.choice))
+        this.$router.replace('/checkout')
       }
     }
   }
