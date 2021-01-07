@@ -20,16 +20,16 @@
                 </div>
                 <span style="width: 230px;font-size: 12px;color: #3c3c3c;margin-left: 20px;cursor: pointer" @click="toDetail(choice.productId)">{{choice.productName}}</span>
                 <span style="color: #9c9c9c;margin-left: 30px;font-size: 11px;margin-top: 6px;width: 130px">商品规格：{{choice.choiceName}}</span>
-                <span style="width: 80px;margin-left: 100px;color: #3c3c3c;font-weight: 700;font-family: Helvetica Neue,sans-serif;margin-top: 4px">￥{{choice.price}}</span>
+                <span style="width: 80px;margin-left: 100px;color: #3c3c3c;font-weight: 700;font-family: Helvetica Neue,sans-serif;margin-top: 4px">￥{{Math.floor(choice.price).toFixed(2)}}</span>
                 <el-input-number v-model="choice.number" :disabled="true" size="mini" style="margin-left: 80px"></el-input-number>
-                <span style="margin-left: 100px;color: #f40;font-weight: 700;font-family: Helvetica Neue,sans-serif;margin-top: 4px">￥{{choice.number * choice.price}}</span>
+                <span style="margin-left: 100px;color: #f40;font-weight: 700;font-family: Helvetica Neue,sans-serif;margin-top: 4px">￥{{Math.floor(choice.number * choice.price).toFixed(2)}}</span>
               </div>
               <div style="margin-top: 10px;margin-left: 30px" v-if="choice.special">
                 <span style="font-size: 10px;color: orange">扶贫商品：  成交后商家会获得{{choice.price * 0.05}}元互助金</span>
               </div>
             </div>
             <div style="text-align: right;margin-top: 6px">店铺合计:
-              <span style="color: rgb(255, 0, 54);font-size: 18px;font-weight: 700;margin-left: 3px">￥{{item.total}}</span>
+              <span style="color: rgb(255, 0, 54);font-size: 18px;font-weight: 700;margin-left: 3px">￥{{Math.floor(item.total).toFixed(2)}}</span>
             </div>
 
           </div>
@@ -62,7 +62,7 @@
           <i class="el-icon-back" style="font-size: 14px;margin-right: 4px"></i>
           <span style="font-size: 15px" @click="toCart()">返回购物车</span>
         </div>
-        <el-button @click="ck()" type="danger" size="medium" plain>提交订单</el-button>
+        <el-button @click="checkout()" type="danger" size="medium" plain>提交订单</el-button>
       </div>
 
 
@@ -77,6 +77,7 @@
 </template>
 
 <script>
+  import {Message} from 'element-ui'
   export default {
     name: "CheckOut",
     computed: {
@@ -89,6 +90,7 @@
         for (let i = 0; i < this.storeList.length; i++) {
           let storeObj = {
             storeId: this.storeList[i].storeId,
+            total: this.storeList[i].total,
             choiceList: []
           };
 
@@ -119,8 +121,10 @@
       this.storeList = dt.storeList;
     },
     methods: {
-      ck() {
-        this.postRequest('/dasdasd',this.postData)
+      checkout() {
+        this.postRequest('/api/order/checkout',this.postData).then(res => {
+          Message.success(res.msg)
+        })
       },
       toCart(){
         this.$router.replace("/home/cart")

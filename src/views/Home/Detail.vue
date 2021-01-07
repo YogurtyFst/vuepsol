@@ -82,7 +82,7 @@
     </div>
 
     <div v-for="item in product.bodyImgs" style="text-align: center;">
-      <img :src="item" alt="" style="">
+      <img :src="item" alt="" style="width: 700px">
     </div>
 
   </div>
@@ -102,13 +102,41 @@
         choice: {
           number: 1,
           userId: null,
-          choiceId: null
+          choiceId: null,
+          choiceName:null
         }
       }
     },
     computed:{
       user(){
         return this.$store.state.user
+      },
+      checkoutGoods() {
+        let data = {
+          userId: this.user.id,
+          totalPrice: this.choice.number * this.price,
+          storeList:[]
+        };
+        let storeObj = {
+          storeId: this.product.storeId,
+          storeName: this.product.storeName,
+          special:false,
+          total: this.choice.number * this.price,
+          choiceList: []
+        };
+        let choiceObj = {
+          choiceId: this.choice.choiceId,
+          number: this.choice.number,
+          productId: this.product.id,
+          price: this.price,
+          choiceName: this.choice.choiceName,
+          selected: true,
+          coverImg: this.product.coverImg,
+          productName: this.product.name
+        };
+        storeObj.choiceList.push(choiceObj);
+        data.storeList.push(storeObj);
+        return data;
       }
     },
     created() {
@@ -124,7 +152,7 @@
         }
 
         for (let i = 0; i < res.choices.length; i++) {
-          res.choices[i].choiceImg = '/api' + res.choices[i].choiceImg
+          res.choices[i].choiceImg = '/api' + res.choices[i].choiceImg;
           res.choices[i].price = Math.floor(res.choices[i].price)
         }
 
@@ -139,6 +167,7 @@
         this.storage = item.storage
         this.choice.choiceId = item.choiceId
         this.choice.number = 1
+        this.choice.choiceName = item.choice
       },
       numChange(value) {
         this.choice.number = value
@@ -147,14 +176,21 @@
         if (this.choice.choiceId == null) {
           Message.info("请选择商品规格")
         }else {
-          this.choice.userId = this.user.id
+          this.choice.userId = this.user.id;
           this.postRequest('/api/cartItem/add',this.$qs.stringify(this.choice)).then(res => {
           })
         }
       },
       buy() {
-        // this.postRequest('/api/order/checkout1',this.$qs.stringify(this.choice))
-        this.$router.replace('/checkout')
+        if (this.choice.choiceId == null) {
+          Message.info("请选择商品规格");
+          console.log(this.product)
+          return
+        }
+        this.$router.push({
+          name: 'Checkout',
+          params: {data: this.checkoutGoods}
+        })
       }
     }
   }
