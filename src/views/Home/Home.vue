@@ -13,7 +13,7 @@
                         <router-link to="/myOrder">我的订单</router-link>
                     </div>
                     <div>
-                        <router-link to="/openStore">申请开店</router-link>
+                        <router-link to="OpenStore">申请开店</router-link>
                     </div>
                     <div>
                         <router-link to="/myAddress">收货地址</router-link>
@@ -51,7 +51,7 @@
                     this.$store.state.user = null;
                     this.$router.replace('/login')
                 } else if (cmd === 'profile') {
-                    this.$router.push('/profile')
+                    this.$router.push('profile')
                 }
             },
         },

@@ -55,6 +55,16 @@ const routes = [
         name: 'Checkout',
         component: CheckOut
       },
+      {
+        path: '/profile',
+        name: "Profile",
+        component: Profile
+      },
+      {
+        path:'/openStore',
+        name: 'OpenStore',
+        component: OpenStore
+      },
     ]
   },
   {
@@ -73,16 +83,8 @@ const routes = [
     name: 'MyAddress',
     component: MyAddress
   },
-  {
-    path:'/openStore',
-    name: 'OpenStore',
-    component: OpenStore
-  },
-  {
-    path: '/profile',
-    name: "Profile",
-    component: Profile
-  }
+
+
 
   // {
   //   path: '/about',
