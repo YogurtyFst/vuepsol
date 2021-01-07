@@ -56,12 +56,12 @@ const routes = [
         component: CheckOut
       },
       {
-        path: '/profile',
+        path: 'profile',
         name: "Profile",
         component: Profile
       },
       {
-        path:'/openStore',
+        path:'openStore',
         name: 'OpenStore',
         component: OpenStore
       },
