@@ -123,7 +123,7 @@
     methods: {
       checkout() {
         this.postRequest('/api/order/checkout',this.postData).then(res => {
-          Message.success(res.msg)
+          this.$router.replace("/home/index")
         })
       },
       toCart(){
