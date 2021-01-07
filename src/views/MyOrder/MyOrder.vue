@@ -1,12 +1,27 @@
 <template>
   <div>
-    我的订单
+    <span v-html="html"></span>
   </div>
 </template>
 
 <script>
   export default {
-    name: "MyOrder"
+    name: "MyOrder",
+    computed:{
+      user(){
+        return this.$store.state.user
+      }
+    },
+    data() {
+      return {
+        html: null
+      }
+    },
+    created() {
+      this.getRequest('/api/common/myOrder',{userId: this.user.id}).then(res => {
+        this.html = res
+      })
+    }
   }
 </script>
 
