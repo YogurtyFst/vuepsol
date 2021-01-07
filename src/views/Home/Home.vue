@@ -4,6 +4,12 @@
             <el-header class="header">
                 <div class="hd">
                     <div>
+                        <router-link to="/home/index">首页</router-link>
+                    </div>
+                    <div>
+                        <router-link to="/home/cart">购物车</router-link>
+                    </div>
+                    <div>
                         <router-link to="/myOrder">我的订单</router-link>
                     </div>
                     <div>

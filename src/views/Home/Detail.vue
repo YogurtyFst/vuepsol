@@ -19,8 +19,8 @@
         <div class="rt">
           <span style="font-size: 20px;">{{product.name}}</span>
           <hr>
-          <div style="margin-top: 40px;font-size: 18px">价格：   <span style="font-size: 26px;color: red;margin-left: 40px;">￥{{price}}</span></div>
-          <div style="text-align: right;font-size: 14px;color: red">互助金: {{price * 0.05}}元</div>
+          <div style="margin-top: 40px;font-size: 18px">价格：   <span style="font-size: 26px;color: red;margin-left: 40px;">￥{{Math.floor(price).toFixed(2)}}</span></div>
+          <div style="text-align: right;font-size: 14px;color: red">互助金: {{(Math.floor(price) * 0.05 ).toFixed(2)}}元</div>
           <div style="display:flex;margin-top: 30px;justify-content: space-between">
             <div style="display: flex">
               <div><span style="font-size: 18px">发货</span><span style="margin-left: 30px"><i class="el-icon-location-outline"></i> <span>{{product.address}}</span></span></div>
@@ -65,7 +65,7 @@
     <div>
       <el-tabs type="border-card" style="height: 300px">
         <el-tab-pane label="商品详情" class="pane">
-          <div style="margin: 20px">
+          <div style="margin: 20px;width: 920px">
             <span>{{product.description}}</span>
           </div>
         </el-tab-pane>
@@ -81,8 +81,8 @@
       </el-tabs>
     </div>
 
-    <div v-for="item in product.bodyImgs" style="text-align: center">
-      <img :src="item" alt="">
+    <div v-for="item in product.bodyImgs" style="text-align: center;">
+      <img :src="item" alt="" style="">
     </div>
 
   </div>
@@ -112,9 +112,9 @@
       }
     },
     created() {
-      this.id = this.$route.params.id
+      this.id = this.$route.params.id;
       this.getRequest("/api/common/detail",{id:this.id}).then(res =>{
-        this.product = res
+        this.product = res;
         for (let i = 0; i < res.swipperImgs.length; i++) {
           res.swipperImgs[i] = '/api' + res.swipperImgs[i]
         }
@@ -125,10 +125,10 @@
 
         for (let i = 0; i < res.choices.length; i++) {
           res.choices[i].choiceImg = '/api' + res.choices[i].choiceImg
-          res.choices[i].price = Math.floor(res.choices[i].price).toFixed(2)
+          res.choices[i].price = Math.floor(res.choices[i].price)
         }
 
-        this.product = res
+        this.product = res;
         this.price = res.displayPrice
       })
     },
@@ -138,7 +138,7 @@
         this.selectIndex = index
         this.storage = item.storage
         this.choice.choiceId = item.choiceId
-        this.choice.num = 1
+        this.choice.number = 1
       },
       numChange(value) {
         this.choice.number = value
@@ -149,7 +149,6 @@
         }else {
           this.choice.userId = this.user.id
           this.postRequest('/api/cartItem/add',this.$qs.stringify(this.choice)).then(res => {
-            // Message.info(res.msg)
           })
         }
       },

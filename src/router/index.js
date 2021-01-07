@@ -9,6 +9,7 @@ import MyOrder from "../views/MyOrder/MyOrder";
 import MyAddress from "../views/MyAddress/MyAddress";
 import OpenStore from "../views/OpenStore/OpenStore";
 import CheckOut from "../views/CheckOut/CheckOut";
+import Cart from "../views/Home/Cart";
 
 Vue.use(VueRouter)
 
@@ -42,7 +43,17 @@ const routes = [
         path: 'detail/:id',
         name: 'detail',
         component: Detail
-      }
+      },
+      {
+        path: 'cart',
+        name: 'cart',
+        component: Cart
+      },
+      {
+        path:'/checkout',
+        name: 'Checkout',
+        component: CheckOut
+      },
     ]
   },
   {
@@ -66,11 +77,7 @@ const routes = [
     name: 'OpenStore',
     component: OpenStore
   },
-  {
-    path:'/checkout',
-    name: 'Checkout',
-    component: CheckOut
-  }
+
   // {
   //   path: '/about',
   //   name: 'About',
