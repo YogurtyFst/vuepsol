@@ -51,7 +51,7 @@
                     this.$store.state.user = null;
                     this.$router.replace('/login')
                 } else if (cmd === 'profile') {
-
+                    this.$router.push('/profile')
                 }
             },
         },

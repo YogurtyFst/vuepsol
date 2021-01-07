@@ -10,6 +10,7 @@ import MyAddress from "../views/MyAddress/MyAddress";
 import OpenStore from "../views/OpenStore/OpenStore";
 import CheckOut from "../views/CheckOut/CheckOut";
 import Cart from "../views/Home/Cart";
+import Profile from "../views/Profile/Profile";
 
 Vue.use(VueRouter)
 
@@ -77,6 +78,11 @@ const routes = [
     name: 'OpenStore',
     component: OpenStore
   },
+  {
+    path: '/profile',
+    name: "Profile",
+    component: Profile
+  }
 
   // {
   //   path: '/about',
