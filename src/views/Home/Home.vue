@@ -1,6 +1,6 @@
 <template>
     <div>
-        <el-container>
+        <el-container style="height: 100vh">
             <el-header class="header">
                 <div class="hd">
                     <div>
@@ -30,7 +30,7 @@
                 </div>
 
             </el-header>
-            <router-view></router-view>
+            <router-view style="height: 100%"></router-view>
         </el-container>
     </div>
 </template>
