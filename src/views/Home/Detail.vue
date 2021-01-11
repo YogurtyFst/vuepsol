@@ -175,6 +175,8 @@
       addCart() {
         if (this.choice.choiceId == null) {
           Message.info("请选择商品规格")
+        }else if (this.storage === 0){
+          Message.info("库存不足")
         }else {
           this.choice.userId = this.user.id;
           this.postRequest('/api/cartItem/add',this.$qs.stringify(this.choice)).then(res => {
@@ -186,6 +188,10 @@
           Message.info("请选择商品规格");
           console.log(this.product)
           return
+        }
+        if (this.storage === 0) {
+          Message.info("库存不足")
+          return;
         }
         this.$router.push({
           name: 'Checkout',

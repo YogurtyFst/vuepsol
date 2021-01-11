@@ -26,7 +26,7 @@
                 <span style="width: 230px;font-size: 12px;color: #3c3c3c;margin-left: 20px;cursor: pointer" @click="toDetail(choice.productId)">{{choice.productName}}</span>
                 <span style="color: #9c9c9c;margin-left: 30px;font-size: 11px;margin-top: 6px;width: 130px">商品规格：{{choice.choiceName}}</span>
                 <span style="width: 80px;margin-left: 100px;color: #3c3c3c;font-weight: 700;font-family: Helvetica Neue,sans-serif;margin-top: 4px">￥{{Math.floor(choice.price).toFixed(2)}}</span>
-                <el-input-number v-model="choice.number" :disabled="true" size="mini" style="margin-left: 80px"></el-input-number>
+                <el-input-number v-model="choice.number" @change="valueChange(choice.choiceId,choice.number)" size="mini" :min="1" :max="choice.storage" style="margin-left: 80px"></el-input-number>
                 <span style="margin-left: 100px;color: #f40;font-weight: 700;font-family: Helvetica Neue,sans-serif;margin-top: 4px;width: 130px">￥{{choice.number * Math.floor(choice.price).toFixed(2)}}</span>
                 <span style="position: relative;bottom: 4px"><el-button type="text" style="color: black" @click="deleteItem(choice.choiceId)">删除</el-button></span>
               </div>
@@ -158,6 +158,9 @@
         }).catch(() => {
 
         });
+      },
+      valueChange(choiceId,number) {
+        this.postRequest('/api/cartItem/update',this.$qs.stringify({choiceId: choiceId,userId: this.user.id, number: number}))
       }
     }
   }
